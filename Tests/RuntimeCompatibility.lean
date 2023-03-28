@@ -520,7 +520,94 @@ def supported := [
 ))",
 "(module (func (export \"main\") (result i32)
   (block (result i32) (i32.const 2) (loop (result i32) (i32.const 1)) (br_table 0 0))
-))"
+))",
+
+"(module
+  (global $a i32 (i32.const -2))
+  (func (export \"main\") (result i32)
+    (global.get $a)
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (select (global.get $x) (i32.const 2) (i32.const 3))
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (select (i32.const 2) (global.get $x) (i32.const 3))
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (loop (result i32)
+      (global.get $x) (nop) (nop)
+    )
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (loop (result i32)
+      (nop) (global.get $x) (nop)
+    )
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (loop (result i32)
+      (nop) (nop) (global.get $x)
+    )
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (if (result i32) (global.get $x)
+      (then (nop) (i32.const 2))
+      (else (nop) (i32.const 3))
+    )
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (if (result i32) (i32.const 1)
+      (then (global.get $x)) (else (i32.const 2))
+    )
+  )
+)",
+
+"(module
+  (global $x (mut i32) (i32.const -12))
+  (func (export \"main\") (result i32)
+    (if (result i32) (i32.const 0)
+      (then (i32.const 2)) (else (global.get $x))
+    )
+  )
+)",
+
+"(module
+  (global $a i32 (i32.const 5535))
+  (global $x (mut i32) (i32.const -12))
+
+  (func (export \"main\") (result i32)
+    (global.set $x (global.get $a))
+    (global.get $x)
+  )
+)"
+
 ]
 
 def main : IO UInt32 := do
