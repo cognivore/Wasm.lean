@@ -409,6 +409,117 @@ def supported := [
       (i32.const 0) (i32.const 1) (br_table 0 (i32.const 7) (i32.const 1))
     )
   )
+))",
+
+"(module (func (export \"main\") (result i32) (i32.const 77)))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (nop) (i32.const 77))
+))",
+
+"(module (func (export \"main\") (result i32) (br 0 (i32.const 79))))",
+
+"(module (func (export \"main\") (result i32)
+  (br 0 (block (result i32) (nop) (i32.const 77)))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (loop (nop))
+  (loop (result i32) (i32.const 7))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (loop (nop) (nop) (nop) (nop))
+  (loop (result i32) (nop) (nop) (i32.const 8) (nop))
+  (drop)
+  (loop (result i32 i64 i32)
+    (nop) (nop) (nop) (i32.const 8) (nop)
+    (nop) (nop) (nop) (i64.const 7) (nop)
+    (nop) (nop) (nop) (i32.const 9) (nop)
+  )
+  (drop) (drop)
+))",
+
+"(module (func (export \"main\") (result i32)
+  (loop (result i32)
+    (loop (nop) (block) (nop))
+    (loop (result i32) (nop) (i32.const 9))
+  )
+))",
+
+"(module (func (export \"main\") (result i32)
+  (loop (result i32) (block (result i32)
+    (loop (result i32) (block (result i32)
+      (loop (result i32) (block (result i32)
+        (loop (result i32) (block (result i32)
+          (loop (result i32) (block (result i32)
+            (loop (result i32) (block (result i32)
+              (loop (result i32) (block (result i32)
+                (loop (result i32) (block (result i32)
+                  (loop (result i32) (block (result i32)
+                    (loop (result i32) (block (result i32)
+                      (loop (result i32) (block (result i32)
+                        (loop (result i32) (block (result i32)
+                          (loop (result i32) (block (result i32)
+                            (loop (result i32) (block (result i32)
+                              (loop (result i32) (block (result i32)
+                                (loop (result i32) (block (result i32)
+                                  (loop (result i32) (block (result i32)
+                                    (loop (result i32) (block (result i32)
+                                      (loop (result i32) (block (result i32)
+                                        (loop (result i32) (block (result i32)
+                                          (nop) (i32.const 150)
+                                        ))
+                                      ))
+                                    ))
+                                  ))
+                                ))
+                              ))
+                            ))
+                          ))
+                        ))
+                      ))
+                    ))
+                  ))
+                ))
+              ))
+            ))
+          ))
+        ))
+      ))
+    ))
+  ))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (select (loop (result i32) (i32.const 1)) (i32.const 2) (i32.const 3))
+))",
+"(module (func (export \"main\") (result i32)
+  (select (i32.const 2) (loop (result i32) (i32.const 1)) (i32.const 3))
+))",
+"(module (func (export \"main\") (result i32)
+  (select (i32.const 2) (i32.const 3) (loop (result i32) (i32.const 1)))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (if (result i32) (i32.const 1) (then (loop (result i32) (i32.const 1))) (else (i32.const 2)))
+))",
+"(module (func (export \"main\") (result i32)
+  (if (result i32) (i32.const 1) (then (i32.const 2)) (else (loop (result i32) (i32.const 1))))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (br_if 0 (loop (result i32) (i32.const 1)) (i32.const 2)))
+))",
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (br_if 0 (i32.const 2) (loop (result i32) (i32.const 1))))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (loop (result i32) (i32.const 1)) (i32.const 2) (br_table 0 0))
+))",
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (i32.const 2) (loop (result i32) (i32.const 1)) (br_table 0 0))
 ))"
 ]
 
