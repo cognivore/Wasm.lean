@@ -603,10 +603,70 @@ def supported := [
   (global $x (mut i32) (i32.const -12))
 
   (func (export \"main\") (result i32)
-    (global.set $x (global.get $a))
+    (global.get $a)
+    (global.set $x)
     (global.get $x)
   )
-)"
+)",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (i32.ctz (br_table 0 0 (i32.const 1) (i32.const 0))))
+))",
+"(module (func (export \"main\") (result i32)
+  (block (result i32)
+    (nop) (nop) (br_table 0 0 0 (i32.const 2) (i32.const 0))
+  )
+))",
+"(module (func (export \"main\") (result i32)
+  (loop (result i32) (br_table 1 1 (i32.const 3) (i32.const 0)) (i32.const 1))
+))",
+"(module (func (export \"main\") (result i32)
+  (loop (result i32)
+    (nop)
+    (br_table 1 1 1 (i32.const 4) (i32.const -1))
+    (i32.const 2)
+  )
+))",
+"(module (func (export \"main\") (result i32)
+  (loop (result i32)
+    (nop) (nop) (br_table 1 1 1 (i32.const 5) (i32.const 1))
+  )
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32) (br 0 (br_table 0 (i32.const 9) (i32.const 0))))
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32)
+    (br_table 0 0 0 (br_table 0 (i32.const 10) (i32.const 0)) (i32.const 1))
+    (i32.const 7)
+  )
+))",
+"(module (func (export \"main\") (result i32)
+  (block (result i32)
+    (br_table 0 0 (i32.const 6) (br_table 0 (i32.const 11) (i32.const 1)))
+    (i32.const 7)
+  )
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32)
+    (if (result i32)
+      (br_table 0 (i32.const 2) (i32.const 0))
+      (then (i32.const 0))
+      (else (i32.const 1))
+    )
+  )
+))",
+
+"(module (func (export \"main\") (result i32)
+  (block (result i32)
+    (select
+      (i32.const 0) (i32.const 1) (br_table 0 (i32.const 7) (i32.const 1))
+    )
+  )
+))"
 
 ]
 
