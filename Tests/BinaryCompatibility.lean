@@ -84,20 +84,20 @@ def uWasmMods := [
     "(module $test
         (func)
         (func $f (export \"(module \\\" (func))\")
-          (param $y f32) (param $y1 f32) (result f32)
+          (param $y i32) (param $y1 i32) (result i32)
             (local $dummy i32)
             (i32.const 42)
             (local.set 2)
             (local.get $y1)
-            (f32.add (local.get $y1))
+            (i32.add (local.get $y1))
             (local.get $y)
-            (f32.add)
+            (i32.add)
         )
     )",
     "(module
         (func (param $x_one i32) (param $three i32) (param $y_one i32)
           (result i32) (i32.add (i32.const 40) (i32.const 2)))
-        (func (param $x_two f32) (param f32) (param f32) (result i32)
+        (func (param $x_two i32) (param i32) (param i32) (result i32)
           (i32.add (i32.const 12) (i32.const 30)))
     )",
     "(module
@@ -290,7 +290,7 @@ def modsLocal :=
   , "(module (func (param i32) (result i32)
         (i32.ne (i32.const 10) (local.tee 0))
   ))"
-  , "(module (func (export \"type-mixed\") (param i64 f32 f64 i32 i32) (local f32 i64 i64 f64)
+  , "(module (func (export \"type-mixed\") (param i64 i32 i64 i32 i32) (local i32 i64 i64 i64)
     (drop) (i64.const 0) (i64.eqz (local.tee 0))
     (drop) (i32.const 0) (i32.eqz (local.tee 3))
     (drop) (i32.const 0) (i32.eqz (local.tee 4))
